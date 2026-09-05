@@ -36,10 +36,10 @@ function App() {
         {/* HEADER & NAVIGATION */}
         <nav style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', marginBottom: '30px', padding: '15px 25px', backgroundColor: 'var(--bg-panel)', borderRadius: '12px', border: '1px solid var(--border-light)' }}>
           
-          {/* Logo */}
+          {/* Updated Logo & Project Name */}
           <Link to="/dashboard" style={{ textDecoration: 'none', color: 'var(--text-main)', display: 'flex', alignItems: 'center', gap: '10px' }}>
-            <div style={{ width: '35px', height: '35px', background: 'linear-gradient(135deg, #8b5cf6, #3b82f6)', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontWeight: 'bold', fontSize: '18px' }}>IG</div>
-            <span style={{ fontSize: '20px', fontWeight: 'bold', fontFamily: "'Averia Gruesa Libre', cursive" }}>InternGrow</span>
+            <div style={{ width: '35px', height: '35px', background: 'linear-gradient(135deg, #8b5cf6, #3b82f6)', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontWeight: 'bold', fontSize: '18px' }}>BS</div>
+            <span style={{ fontSize: '20px', fontWeight: 'bold', fontFamily: "'Averia Gruesa Libre', cursive" }}>BizSync Pro</span>
           </Link>
 
           {/* Mobile Menu Hamburger Icon */}
@@ -47,10 +47,13 @@ function App() {
             ☰
           </button>
 
-          {/* Cleaned Professional Nav Links */}
+          {/* Nav Links (Added Register for unauthenticated users) */}
           <div className={`nav-links ${mobileMenuOpen ? 'open' : ''}`} style={{ display: 'flex', gap: '20px', alignItems: 'center', flexWrap: 'wrap' }}>
             {!isAuthenticated ? (
-              <Link to="/login" style={{ color: '#8b5cf6', fontWeight: 'bold', textDecoration: 'none' }}>Login</Link>
+              <>
+                <Link to="/login" style={{ color: '#8b5cf6', fontWeight: 'bold', textDecoration: 'none' }}>Login</Link>
+                <Link to="/register" style={{ color: '#10b981', fontWeight: 'bold', textDecoration: 'none' }}>Register</Link>
+              </>
             ) : (
               <>
                 <Link to="/hr-dashboard" style={{ color: '#10b981', fontWeight: 'bold', textDecoration: 'none' }}>HR Desk</Link>
@@ -82,20 +85,18 @@ function App() {
             <Route path="/analytics" element={<AnalyticsDashboard />} />
             <Route path="/crm" element={<CRMDashboard />} />
             <Route path="/" element={<Navigate to="/login" replace />} />
-            
-            {/* Catch-all for broken links */}
             <Route path="*" element={<NotFound />} />
           </Routes>
         </div>
 
-        {/* Footer */}
+        {/* Updated Footer */}
         <footer style={{ marginTop: '40px', padding: '20px', borderTop: '1px solid var(--border-light)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '15px', color: 'var(--text-muted)', fontSize: '14px' }}>
           
-          <div>&copy; {new Date().getFullYear()} InternGrow. All rights reserved.</div>
+          <div>&copy; {new Date().getFullYear()} BizSync Pro. All rights reserved.</div>
           
-          <div style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
-            <a href="mailto:support@interngrow.com" style={{ color: '#3b82f6', textDecoration: 'none' }}>support@interngrow.com</a>
-            <a href="tel:+923000000000" style={{ color: '#10b981', textDecoration: 'none' }}>+92 300 0000000</a>
+          <div style={{ display: 'flex', gap: '20px', alignItems: 'center', flexWrap: 'wrap' }}>
+            <a href="mailto:hassansheharyar56@gmail.com" style={{ color: '#3b82f6', textDecoration: 'none' }}>hassansheharyar56@gmail.com</a>
+            <a href="tel:+923194648854" style={{ color: '#10b981', textDecoration: 'none' }}>+92-319-4648854</a>
           </div>
         </footer>
 
