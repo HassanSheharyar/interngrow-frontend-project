@@ -2,9 +2,25 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>interngrow-saas-auth</title>
+    <!-- Task 4: Add Favicon -->
+    <link rel="icon" type="image/svg+xml" href="https://cdn-icons-png.flaticon.com/512/1005/1005141.png" />
+    
+    <!-- Task 16 & 20: Mobile optimize & fix mobile overflow -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    
+    <!-- Task 5 & 6: Fix Page Titles & Add Meta Desc -->
+    <meta name="description" content="InternGrow SaaS Dashboard - Complete CRM, Analytics, and Project Management tool." />
+    <title>InternGrow Dashboard Pro</title>
+
+    <style>
+      /* Task 1: Remove horizontal scroll globally */
+      html, body {
+        max-width: 100vw;
+        overflow-x: hidden;
+        margin: 0;
+        padding: 0;
+      }
+    </style>
   </head>
   <body>
     <div id="root"></div>
