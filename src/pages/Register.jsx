@@ -1,85 +1,89 @@
 import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 
 function Register() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
 
-  const getPasswordStrength = (pass) => {
-    let strength = 0;
-    if (pass.length >= 6) strength += 1;
-    if (/[A-Z]/.test(pass)) strength += 1;
-    if (/[0-9]/.test(pass)) strength += 1;
-    if (/[^A-Za-z0-9]/.test(pass)) strength += 1;
-
-    if (pass.length === 0) return { label: '', color: 'transparent', width: '0%' };
-    if (strength <= 2) return { label: 'Weak', color: '#ef4444', width: '33%' }; 
-    if (strength === 3) return { label: 'Good', color: '#eab308', width: '66%' }; 
-    return { label: 'Strong', color: '#22c55e', width: '100%' }; 
-  };
-
-  const handleRegister = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    alert(`Name: ${name}\nEmail: ${email}\n\nAccount created successfully!`);
+    if (name && email && password) {
+      alert("Registration successful! Please login.");
+      navigate('/login');
+    } else {
+      alert("Please fill all fields");
+    }
   };
-
-  const strengthData = getPasswordStrength(password);
 
   return (
-    <div className="form-container">
-      <h2>Create Account</h2>
-      
-      <form onSubmit={handleRegister}>
+    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '80vh' }}>
+      <div style={{ backgroundColor: 'var(--bg-panel)', padding: '40px', borderRadius: '12px', border: '1px solid var(--border-light)', width: '100%', maxWidth: '400px' }}>
+        <h2 style={{ textAlign: 'center', color: 'var(--text-main)', marginBottom: '30px', fontFamily: "'Averia Gruesa Libre', cursive" }}>Create Account</h2>
         
-        <div className="form-group">
-          <label>Full Name</label>
-          <input 
-            type="text" 
-            placeholder="Enter your full name" 
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            required 
-          />
-        </div>
-
-        <div className="form-group">
-          <label>Email Address</label>
-          <input 
-            type="email" 
-            placeholder="Enter your email" 
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required 
-          />
-        </div>
-
-        <div className="form-group">
-          <label>Password</label>
-          <input 
-            type="password" 
-            placeholder="Create a strong password" 
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required 
-          />
+        <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
           
-          {password.length > 0 && (
-            <div style={{ marginTop: '12px' }}>
-              <div style={{ height: '5px', width: '100%', backgroundColor: 'rgba(255, 255, 255, 0.1)', borderRadius: '4px', overflow: 'hidden' }}>
-                <div style={{ height: '100%', width: strengthData.width, backgroundColor: strengthData.color, transition: 'width 0.4s ease' }}></div>
-              </div>
-              <p style={{ margin: '6px 0 0 0', fontSize: '13px', color: strengthData.color, textAlign: 'right', fontWeight: '700' }}>
-                {strengthData.label}
-              </p>
+          <div>
+            <label style={{ display: 'block', marginBottom: '8px', color: 'var(--text-muted)', fontSize: '14px' }}>Full Name</label>
+            <input 
+              type="text" 
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              placeholder="Enter your name" 
+              required 
+              style={{ width: '100%', padding: '12px 15px', borderRadius: '8px', border: '1px solid var(--border-light)', backgroundColor: 'var(--input-bg)', color: 'var(--text-main)', boxSizing: 'border-box', outline: 'none' }} 
+            />
+          </div>
+
+          <div>
+            <label style={{ display: 'block', marginBottom: '8px', color: 'var(--text-muted)', fontSize: '14px' }}>Email Address</label>
+            <input 
+              type="email" 
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="Enter your email" 
+              required 
+              style={{ width: '100%', padding: '12px 15px', borderRadius: '8px', border: '1px solid var(--border-light)', backgroundColor: 'var(--input-bg)', color: 'var(--text-main)', boxSizing: 'border-box', outline: 'none' }} 
+            />
+          </div>
+          
+          <div>
+            <label style={{ display: 'block', marginBottom: '8px', color: 'var(--text-muted)', fontSize: '14px' }}>Password</label>
+            <div style={{ position: 'relative' }}>
+              <input 
+                type={showPassword ? "text" : "password"} 
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Create a password" 
+                required 
+                style={{ width: '100%', padding: '12px 15px', paddingRight: '45px', borderRadius: '8px', border: '1px solid var(--border-light)', backgroundColor: 'var(--input-bg)', color: 'var(--text-main)', boxSizing: 'border-box', outline: 'none' }} 
+              />
+              <button 
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                style={{ position: 'absolute', right: '12px', top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', color: 'var(--text-muted)', cursor: 'pointer', padding: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+              >
+                {showPassword ? (
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                ) : (
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>
+                )}
+              </button>
             </div>
-          )}
+          </div>
+
+          <button type="submit" style={{ width: '100%', padding: '12px', borderRadius: '8px', border: 'none', backgroundColor: '#10b981', color: 'white', fontWeight: 'bold', fontSize: '16px', cursor: 'pointer', marginTop: '10px' }}>
+            Register Account
+          </button>
+        </form>
+        
+        <div style={{ textAlign: 'center', marginTop: '20px' }}>
+          <span style={{ color: 'var(--text-muted)', fontSize: '14px' }}>Already have an account? </span>
+          <Link to="/login" style={{ color: '#8b5cf6', fontSize: '14px', textDecoration: 'none', fontWeight: 'bold' }}>Login here</Link>
         </div>
-
-        <button type="submit" className="btn-primary">
-          Register
-        </button>
-
-      </form>
+      </div>
     </div>
   );
 }
