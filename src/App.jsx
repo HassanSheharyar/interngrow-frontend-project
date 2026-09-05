@@ -36,18 +36,15 @@ function App() {
         {/* HEADER & NAVIGATION */}
         <nav style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', marginBottom: '30px', padding: '15px 25px', backgroundColor: 'var(--bg-panel)', borderRadius: '12px', border: '1px solid var(--border-light)' }}>
           
-          {/* Updated Logo & Project Name */}
           <Link to="/dashboard" style={{ textDecoration: 'none', color: 'var(--text-main)', display: 'flex', alignItems: 'center', gap: '10px' }}>
             <div style={{ width: '35px', height: '35px', background: 'linear-gradient(135deg, #8b5cf6, #3b82f6)', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontWeight: 'bold', fontSize: '18px' }}>BS</div>
             <span style={{ fontSize: '20px', fontWeight: 'bold', fontFamily: "'Averia Gruesa Libre', cursive" }}>BizSync Pro</span>
           </Link>
 
-          {/* Mobile Menu Hamburger Icon */}
           <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} style={{ display: 'none', background: 'transparent', border: 'none', fontSize: '24px', cursor: 'pointer', color: 'var(--text-main)' }} className="mobile-menu-btn">
             ☰
           </button>
 
-          {/* Nav Links (Added Register for unauthenticated users) */}
           <div className={`nav-links ${mobileMenuOpen ? 'open' : ''}`} style={{ display: 'flex', gap: '20px', alignItems: 'center', flexWrap: 'wrap' }}>
             {!isAuthenticated ? (
               <>
@@ -61,6 +58,15 @@ function App() {
                 <Link to="/project-management" style={{ color: '#f59e0b', fontWeight: 'bold', textDecoration: 'none' }}>Projects</Link>
                 <Link to="/analytics" style={{ color: '#ec4899', fontWeight: 'bold', textDecoration: 'none' }}>Analytics</Link>
                 <Link to="/crm" style={{ color: '#ef4444', fontWeight: 'bold', textDecoration: 'none' }}>CRM System</Link>
+                
+                {/* 🔴 Naya Logout Button 🔴 */}
+                <Link 
+                  to="/login" 
+                  onClick={() => setIsAuthenticated(false)} 
+                  style={{ marginLeft: '10px', padding: '6px 14px', borderRadius: '6px', border: '1px solid #ef4444', color: '#ef4444', textDecoration: 'none', fontWeight: 'bold', fontSize: '13px', transition: 'all 0.3s ease' }}
+                >
+                  Logout
+                </Link>
               </>
             )}
             
@@ -89,11 +95,9 @@ function App() {
           </Routes>
         </div>
 
-        {/* Updated Footer */}
+        {/* FOOTER */}
         <footer style={{ marginTop: '40px', padding: '20px', borderTop: '1px solid var(--border-light)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '15px', color: 'var(--text-muted)', fontSize: '14px' }}>
-          
           <div>&copy; {new Date().getFullYear()} BizSync Pro. All rights reserved.</div>
-          
           <div style={{ display: 'flex', gap: '20px', alignItems: 'center', flexWrap: 'wrap' }}>
             <a href="mailto:hassansheharyar56@gmail.com" style={{ color: '#3b82f6', textDecoration: 'none' }}>hassansheharyar56@gmail.com</a>
             <a href="tel:+923194648854" style={{ color: '#10b981', textDecoration: 'none' }}>+92-319-4648854</a>
