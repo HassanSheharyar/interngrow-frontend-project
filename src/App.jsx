@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { BrowserRouter, Routes, Route, Link, Navigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Link, NavLink, Navigate } from 'react-router-dom';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import ForgotPassword from './pages/ForgotPassword';
@@ -29,6 +29,17 @@ function App() {
     return children;
   };
 
+  // Active Tab Style Helper Function
+  const navStyle = (baseColor) => ({ isActive }) => ({
+    color: baseColor,
+    fontWeight: 'bold',
+    textDecoration: 'none',
+    borderBottom: isActive ? `2px solid ${baseColor}` : '2px solid transparent',
+    paddingBottom: '4px',
+    opacity: isActive ? 1 : 0.7,
+    transition: 'all 0.3s ease'
+  });
+
   return (
     <BrowserRouter>
       <div className={`app-wrapper ${isDarkMode ? 'dark-mode' : 'light-mode'}`} style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', padding: '20px', boxSizing: 'border-box', overflowX: 'hidden' }}>
@@ -48,25 +59,24 @@ function App() {
           <div className={`nav-links ${mobileMenuOpen ? 'open' : ''}`} style={{ display: 'flex', gap: '20px', alignItems: 'center', flexWrap: 'wrap' }}>
             {!isAuthenticated ? (
               <>
-                <Link to="/login" style={{ color: '#8b5cf6', fontWeight: 'bold', textDecoration: 'none' }}>Login</Link>
-                <Link to="/register" style={{ color: '#10b981', fontWeight: 'bold', textDecoration: 'none' }}>Register</Link>
+                <NavLink to="/login" style={navStyle('#8b5cf6')}>Login</NavLink>
+                <NavLink to="/register" style={navStyle('#10b981')}>Register</NavLink>
               </>
             ) : (
               <>
-                <Link to="/hr-dashboard" style={{ color: '#10b981', fontWeight: 'bold', textDecoration: 'none' }}>HR Desk</Link>
-                <Link to="/ecommerce-dashboard" style={{ color: '#3b82f6', fontWeight: 'bold', textDecoration: 'none' }}>Shop</Link>
-                <Link to="/project-management" style={{ color: '#f59e0b', fontWeight: 'bold', textDecoration: 'none' }}>Projects</Link>
-                <Link to="/analytics" style={{ color: '#ec4899', fontWeight: 'bold', textDecoration: 'none' }}>Analytics</Link>
-                <Link to="/crm" style={{ color: '#ef4444', fontWeight: 'bold', textDecoration: 'none' }}>CRM System</Link>
+                <NavLink to="/hr-dashboard" style={navStyle('#10b981')}>HR Desk</NavLink>
+                <NavLink to="/ecommerce-dashboard" style={navStyle('#3b82f6')}>Shop</NavLink>
+                <NavLink to="/project-management" style={navStyle('#f59e0b')}>Projects</NavLink>
+                <NavLink to="/analytics" style={navStyle('#ec4899')}>Analytics</NavLink>
+                <NavLink to="/crm" style={navStyle('#ef4444')}>CRM System</NavLink>
                 
-                {/* 🔴 Naya Logout Button 🔴 */}
-                <Link 
-                  to="/login" 
+                {/* 🔴 FIXED LOGOUT BUTTON 🔴 */}
+                <button 
                   onClick={() => setIsAuthenticated(false)} 
-                  style={{ marginLeft: '10px', padding: '6px 14px', borderRadius: '6px', border: '1px solid #ef4444', color: '#ef4444', textDecoration: 'none', fontWeight: 'bold', fontSize: '13px', transition: 'all 0.3s ease' }}
+                  style={{ marginLeft: '10px', padding: '6px 14px', borderRadius: '6px', border: '1px solid #ef4444', backgroundColor: 'transparent', color: '#ef4444', cursor: 'pointer', fontWeight: 'bold', fontSize: '13px', transition: 'all 0.3s ease' }}
                 >
                   Logout
-                </Link>
+                </button>
               </>
             )}
             
