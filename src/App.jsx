@@ -20,7 +20,7 @@ function App() {
   const [isDarkMode, setIsDarkMode] = useState(true);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
-  const [notificationsOpen, setNotificationsOpen] = useState(false); // 🔔 Notification State
+  const [notificationsOpen, setNotificationsOpen] = useState(false);
 
   useEffect(() => {
     document.body.style.backgroundColor = isDarkMode ? '#0f0f13' : '#f1f5f9';
@@ -94,9 +94,9 @@ function App() {
                     <span style={{ position: 'absolute', top: '0px', right: '0px', backgroundColor: '#ef4444', color: 'white', fontSize: '10px', fontWeight: 'bold', borderRadius: '50%', width: '15px', height: '15px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>3</span>
                   </button>
 
-                  {/* Notifications Dropdown */}
+                  {/* Notifications Dropdown (Added class here) */}
                   {notificationsOpen && (
-                    <div style={{ position: 'absolute', right: 0, top: '45px', backgroundColor: 'var(--bg-panel)', border: '1px solid var(--border-light)', borderRadius: '8px', width: '280px', zIndex: 100, boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)' }}>
+                    <div className="mobile-dropdown-fix" style={{ position: 'absolute', right: 0, top: '45px', backgroundColor: 'var(--bg-panel)', border: '1px solid var(--border-light)', borderRadius: '8px', width: '280px', zIndex: 100, boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)' }}>
                       <div style={{ padding: '12px', borderBottom: '1px solid var(--border-light)', fontWeight: 'bold', color: 'var(--text-main)' }}>Notifications</div>
                       
                       <div style={{ padding: '12px', borderBottom: '1px solid var(--border-light)', fontSize: '13px' }}>
@@ -124,8 +124,9 @@ function App() {
                     HS
                   </button>
                   
+                  {/* Profile Dropdown Menu (Added class here) */}
                   {profileOpen && (
-                    <div style={{ position: 'absolute', right: 0, top: '45px', backgroundColor: 'var(--bg-panel)', border: '1px solid var(--border-light)', borderRadius: '8px', padding: '10px', minWidth: '160px', zIndex: 100, boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)' }}>
+                    <div className="mobile-dropdown-fix" style={{ position: 'absolute', right: 0, top: '45px', backgroundColor: 'var(--bg-panel)', border: '1px solid var(--border-light)', borderRadius: '8px', padding: '10px', minWidth: '160px', zIndex: 100, boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)' }}>
                       <div style={{ padding: '8px', borderBottom: '1px solid var(--border-light)', marginBottom: '5px', color: 'var(--text-main)', fontWeight: 'bold' }}>
                         Hassan Sheharyar
                       </div>

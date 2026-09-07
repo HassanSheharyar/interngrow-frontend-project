@@ -183,3 +183,16 @@ input[type="checkbox"] { accent-color: #8b5cf6; width: 16px; height: 16px; curso
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
 }
+
+/* =========================================
+   📱 MOBILE DROPDOWN FIX (NOTIFICATIONS & PROFILE)
+   ========================================= */
+@media screen and (max-width: 900px) {
+  .mobile-dropdown-fix {
+    right: auto !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    width: 260px !important; /* Mobile ke liye perfect width */
+    z-index: 9999 !important;
+  }
+}
