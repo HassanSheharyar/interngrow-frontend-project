@@ -1,19 +1,21 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { toast } from 'react-hot-toast'; // Toast import kiya gaya hai
 
 function Login({ onLogin }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-  const navigate = useNavigate(); // Navigation ke liye hook add kiya gaya hai
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (email && password) {
-      onLogin(); // State update hogi
-      navigate('/dashboard'); // User seedha dashboard par redirect ho jayega
+      toast.success('Login Successful! Welcome back.'); // Beautiful popup
+      onLogin();
+      navigate('/dashboard');
     } else {
-      alert("Please enter both email and password");
+      toast.error("Please enter both email and password!"); // Error popup
     }
   };
 
@@ -31,7 +33,6 @@ function Login({ onLogin }) {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Enter your email" 
-              required 
               style={{ width: '100%', padding: '12px 15px', borderRadius: '8px', border: '1px solid var(--border-light)', backgroundColor: 'var(--input-bg)', color: 'var(--text-main)', boxSizing: 'border-box', outline: 'none' }} 
             />
           </div>
@@ -44,7 +45,6 @@ function Login({ onLogin }) {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Enter your password" 
-                required 
                 style={{ width: '100%', padding: '12px 15px', paddingRight: '45px', borderRadius: '8px', border: '1px solid var(--border-light)', backgroundColor: 'var(--input-bg)', color: 'var(--text-main)', boxSizing: 'border-box', outline: 'none' }} 
               />
               <button 

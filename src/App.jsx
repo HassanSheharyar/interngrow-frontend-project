@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Link, NavLink, Navigate } from 'react-router-dom';
+import { Toaster, toast } from 'react-hot-toast';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import ForgotPassword from './pages/ForgotPassword';
@@ -18,6 +19,7 @@ function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(true);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [profileOpen, setProfileOpen] = useState(false); // Dropdown state
 
   useEffect(() => {
     document.body.style.backgroundColor = isDarkMode ? '#0f0f13' : '#f1f5f9';
@@ -29,7 +31,6 @@ function App() {
     return children;
   };
 
-  // Active Tab Style Helper Function
   const navStyle = (baseColor) => ({ isActive }) => ({
     color: baseColor,
     fontWeight: 'bold',
@@ -40,17 +41,34 @@ function App() {
     transition: 'all 0.3s ease'
   });
 
+  const handleLogout = () => {
+    setIsAuthenticated(false);
+    setProfileOpen(false);
+    toast.success("Logged out successfully!");
+  };
+
   return (
     <BrowserRouter>
+      {/* Toast Notification Container */}
+      <Toaster position="top-right" reverseOrder={false} />
+      
       <div className={`app-wrapper ${isDarkMode ? 'dark-mode' : 'light-mode'}`} style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', padding: '20px', boxSizing: 'border-box', overflowX: 'hidden' }}>
         
         {/* HEADER & NAVIGATION */}
-        <nav style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', marginBottom: '30px', padding: '15px 25px', backgroundColor: 'var(--bg-panel)', borderRadius: '12px', border: '1px solid var(--border-light)' }}>
+        <nav style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '15px', marginBottom: '30px', padding: '15px 25px', backgroundColor: 'var(--bg-panel)', borderRadius: '12px', border: '1px solid var(--border-light)' }}>
           
           <Link to="/dashboard" style={{ textDecoration: 'none', color: 'var(--text-main)', display: 'flex', alignItems: 'center', gap: '10px' }}>
             <div style={{ width: '35px', height: '35px', background: 'linear-gradient(135deg, #8b5cf6, #3b82f6)', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontWeight: 'bold', fontSize: '18px' }}>BS</div>
             <span style={{ fontSize: '20px', fontWeight: 'bold', fontFamily: "'Averia Gruesa Libre', cursive" }}>BizSync Pro</span>
           </Link>
+
+          {/* Global Search Bar (Only visible when logged in) */}
+          {isAuthenticated && (
+            <div style={{ display: 'flex', alignItems: 'center', backgroundColor: 'var(--input-bg)', border: '1px solid var(--border-light)', borderRadius: '20px', padding: '6px 15px', flex: '1', maxWidth: '300px' }}>
+              <span style={{ fontSize: '14px' }}>🔍</span>
+              <input type="text" placeholder="Search anything..." style={{ border: 'none', background: 'transparent', outline: 'none', color: 'var(--text-main)', width: '100%', marginLeft: '10px', fontSize: '14px' }} />
+            </div>
+          )}
 
           <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} style={{ display: 'none', background: 'transparent', border: 'none', fontSize: '24px', cursor: 'pointer', color: 'var(--text-main)' }} className="mobile-menu-btn">
             ☰
@@ -70,13 +88,22 @@ function App() {
                 <NavLink to="/analytics" style={navStyle('#ec4899')}>Analytics</NavLink>
                 <NavLink to="/crm" style={navStyle('#ef4444')}>CRM System</NavLink>
                 
-                {/* 🔴 FIXED LOGOUT BUTTON 🔴 */}
-                <button 
-                  onClick={() => setIsAuthenticated(false)} 
-                  style={{ marginLeft: '10px', padding: '6px 14px', borderRadius: '6px', border: '1px solid #ef4444', backgroundColor: 'transparent', color: '#ef4444', cursor: 'pointer', fontWeight: 'bold', fontSize: '13px', transition: 'all 0.3s ease' }}
-                >
-                  Logout
-                </button>
+                {/* User Profile Dropdown */}
+                <div style={{ position: 'relative', marginLeft: '10px' }}>
+                  <button onClick={() => setProfileOpen(!profileOpen)} style={{ background: 'linear-gradient(135deg, #f59e0b, #ec4899)', border: 'none', borderRadius: '50%', width: '38px', height: '38px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontWeight: 'bold' }}>
+                    HS
+                  </button>
+                  
+                  {profileOpen && (
+                    <div style={{ position: 'absolute', right: 0, top: '45px', backgroundColor: 'var(--bg-panel)', border: '1px solid var(--border-light)', borderRadius: '8px', padding: '10px', minWidth: '160px', zIndex: 100, boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)' }}>
+                      <div style={{ padding: '8px', borderBottom: '1px solid var(--border-light)', marginBottom: '5px', color: 'var(--text-main)', fontWeight: 'bold' }}>
+                        Hassan Sheharyar
+                      </div>
+                      <Link to="/hr-dashboard" onClick={() => setProfileOpen(false)} style={{ display: 'block', padding: '8px', color: 'var(--text-muted)', textDecoration: 'none', fontSize: '14px' }}>⚙️ Settings</Link>
+                      <button onClick={handleLogout} style={{ width: '100%', textAlign: 'left', background: 'transparent', border: 'none', color: '#ef4444', fontWeight: 'bold', cursor: 'pointer', padding: '8px', fontSize: '14px' }}>🚪 Logout</button>
+                    </div>
+                  )}
+                </div>
               </>
             )}
             
@@ -94,7 +121,7 @@ function App() {
             <Route path="/forgot-password" element={<ForgotPassword />} />
             <Route path="/otp-verification" element={<OTPVerification />} />
             <Route path="/reset-password" element={<ResetPassword />} />
-            <Route path="/dashboard" element={<ProtectedRoute><Dashboard onLogout={() => setIsAuthenticated(false)} /></ProtectedRoute>} />
+            <Route path="/dashboard" element={<ProtectedRoute><Dashboard onLogout={handleLogout} /></ProtectedRoute>} />
             <Route path="/hr-dashboard" element={<EmployeeDashboard />} />
             <Route path="/ecommerce-dashboard" element={<EcommerceDashboard />} />
             <Route path="/project-management" element={<ProjectManagement />} />
