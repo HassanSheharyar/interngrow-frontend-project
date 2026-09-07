@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
+import { toast } from 'react-hot-toast'; // Toast import add kiya gaya hai
 
 function CRMDashboard() {
   const [clients, setClients] = useState([]);
@@ -19,7 +20,7 @@ function CRMDashboard() {
   const fetchCRMData = useCallback(async () => {
     setLoading(true);
     try {
-      await new Promise(resolve => setTimeout(resolve, 1500)); // Simulate API delay
+      await new Promise(resolve => setTimeout(resolve, 1500)); 
       
       const mockStats = { totalClients: 124, activeDeals: '$45,000', conversionRate: '68%' };
       const mockClients = [
@@ -46,12 +47,12 @@ function CRMDashboard() {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (editId) {
-      // Update existing client
       setClients(clients.map(c => c.id === editId ? { ...formData, id: editId } : c));
+      toast.success("Client updated successfully!");
     } else {
-      // Create new client
       const newClient = { ...formData, id: Date.now() };
       setClients([newClient, ...clients]);
+      toast.success("New client added successfully!");
     }
     closeModal();
   };
@@ -60,7 +61,25 @@ function CRMDashboard() {
   const handleDelete = (id) => {
     if(window.confirm("Are you sure you want to delete this client?")) {
       setClients(clients.filter(c => c.id !== id));
+      toast.error("Client deleted.");
     }
+  };
+
+  // 4. EXPORT TO CSV LOGIC
+  const exportToCSV = () => {
+    const headers = ["ID,Name,Company,Email,Status,Deal Value"];
+    const rows = clients.map(c => `${c.id},${c.name},${c.company},${c.email},${c.status},${c.value}`);
+    const csvContent = "data:text/csv;charset=utf-8," + [headers, ...rows].join("\n");
+    
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", "BizSync_CRM_Clients.csv");
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    
+    toast.success("Data exported to CSV successfully!");
   };
 
   const openModalForEdit = (client) => {
@@ -77,14 +96,12 @@ function CRMDashboard() {
 
   const handleInput = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
 
-  // Filter Logic
   const filteredClients = clients.filter(c => {
     const matchesSearch = c.name.toLowerCase().includes(searchTerm.toLowerCase()) || c.company.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesStatus = filterStatus === 'All' || c.status === filterStatus;
     return matchesSearch && matchesStatus;
   });
 
-  // LOADING STATE
   if (loading) {
     return (
       <div style={{ padding: '30px', width: '100%', boxSizing: 'border-box' }}>
@@ -100,7 +117,6 @@ function CRMDashboard() {
     );
   }
 
-  // ERROR HANDLING
   if (error) {
     return <div style={{ color: '#ef4444', padding: '50px', textAlign: 'center' }}><h2>Error</h2><p>{error}</p><button onClick={fetchCRMData}>Retry</button></div>;
   }
@@ -108,10 +124,18 @@ function CRMDashboard() {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', width: '100%', minHeight: '85vh', boxSizing: 'border-box', padding: '30px', borderRadius: '12px', border: '1px solid var(--border-light)', backgroundColor: 'var(--app-bg)' }}>
       
-      {/* Header */}
+      {/* Header with Export & Add Buttons */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '20px', marginBottom: '30px' }}>
         <h1 style={{ fontSize: '28px', color: 'var(--text-main)', margin: 0 }}>CRM Dashboard</h1>
-        <button onClick={() => setShowModal(true)} style={{ padding: '10px 20px', borderRadius: '8px', border: 'none', background: '#10b981', color: 'white', fontWeight: 'bold', cursor: 'pointer' }}>+ Add Client</button>
+        
+        <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
+          <button onClick={exportToCSV} style={{ padding: '10px 15px', borderRadius: '8px', border: 'none', background: '#3b82f6', color: 'white', fontWeight: 'bold', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '5px' }}>
+            <span>⬇️</span> Export CSV
+          </button>
+          <button onClick={() => setShowModal(true)} style={{ padding: '10px 20px', borderRadius: '8px', border: 'none', background: '#10b981', color: 'white', fontWeight: 'bold', cursor: 'pointer' }}>
+            + Add Client
+          </button>
+        </div>
       </div>
 
       {/* Stats Cards */}
@@ -130,7 +154,7 @@ function CRMDashboard() {
         </div>
       </div>
 
-      {/* Chart Section (CSS Based) */}
+      {/* Chart Section */}
       <div style={{ backgroundColor: 'var(--bg-panel)', padding: '25px', borderRadius: '12px', border: '1px solid var(--border-light)', marginBottom: '30px' }}>
         <h3 style={{ margin: '0 0 20px 0', color: 'var(--text-main)' }}>Sales Funnel</h3>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
@@ -153,7 +177,7 @@ function CRMDashboard() {
 
       {/* Data Table */}
       <div style={{ overflowX: 'auto', backgroundColor: 'var(--bg-panel)', borderRadius: '12px', border: '1px solid var(--border-light)' }}>
-        <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
+        <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', minWidth: '600px' }}>
           <thead>
             <tr style={{ borderBottom: '1px solid var(--border-light)', backgroundColor: 'var(--input-bg)' }}>
               <th style={{ padding: '15px', color: 'var(--text-muted)' }}>Name</th>

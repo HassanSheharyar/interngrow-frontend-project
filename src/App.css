@@ -135,3 +135,51 @@ input[type="checkbox"] { accent-color: #8b5cf6; width: 16px; height: 16px; curso
 .app-wrapper.light-mode *[style*="linear-gradient"] {
   color: #ffffff !important;
 }
+
+/* =========================================
+   📱 RESPONSIVE DESIGN & MOBILE OPTIMIZATION
+   ========================================= */
+
+/* Mobile view ke liye Media Query */
+@media screen and (max-width: 900px) {
+  
+  /* 1. Hamburger button ko show karein */
+  .mobile-menu-btn {
+    display: flex !important;
+  }
+
+  /* 2. Default nav-links ko hide karein (Mobile par Dropdown banayen) */
+  .nav-links {
+    display: none !important;
+    width: 100%;
+    flex-direction: column !important;
+    align-items: center !important;
+    padding-top: 20px;
+    margin-top: 15px;
+    border-top: 1px solid var(--border-light);
+  }
+
+  /* 3. Jab hamburger click ho toh menu show ho */
+  .nav-links.open {
+    display: flex !important;
+  }
+
+  /* 4. Search bar ko mobile par chupa dein taa ke space bache */
+  .app-wrapper nav div:nth-child(2) input {
+    width: 100px !important; /* Mobile par search bar chota kar diya */
+  }
+
+  /* 5. Footer ko center align karein */
+  footer {
+    flex-direction: column;
+    text-align: center;
+    gap: 15px;
+  }
+}
+
+/* 6. Tables ko responsive banayen taa ke screen se bahar na jayen */
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
