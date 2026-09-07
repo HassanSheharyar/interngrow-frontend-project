@@ -19,7 +19,8 @@ function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(true);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [profileOpen, setProfileOpen] = useState(false); // Dropdown state
+  const [profileOpen, setProfileOpen] = useState(false);
+  const [notificationsOpen, setNotificationsOpen] = useState(false); // 🔔 Notification State
 
   useEffect(() => {
     document.body.style.backgroundColor = isDarkMode ? '#0f0f13' : '#f1f5f9';
@@ -49,7 +50,6 @@ function App() {
 
   return (
     <BrowserRouter>
-      {/* Toast Notification Container */}
       <Toaster position="top-right" reverseOrder={false} />
       
       <div className={`app-wrapper ${isDarkMode ? 'dark-mode' : 'light-mode'}`} style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', padding: '20px', boxSizing: 'border-box', overflowX: 'hidden' }}>
@@ -62,7 +62,6 @@ function App() {
             <span style={{ fontSize: '20px', fontWeight: 'bold', fontFamily: "'Averia Gruesa Libre', cursive" }}>BizSync Pro</span>
           </Link>
 
-          {/* Global Search Bar (Only visible when logged in) */}
           {isAuthenticated && (
             <div style={{ display: 'flex', alignItems: 'center', backgroundColor: 'var(--input-bg)', border: '1px solid var(--border-light)', borderRadius: '20px', padding: '6px 15px', flex: '1', maxWidth: '300px' }}>
               <span style={{ fontSize: '14px' }}>🔍</span>
@@ -74,7 +73,7 @@ function App() {
             ☰
           </button>
 
-          <div className={`nav-links ${mobileMenuOpen ? 'open' : ''}`} style={{ display: 'flex', gap: '20px', alignItems: 'center', flexWrap: 'wrap' }}>
+          <div className={`nav-links ${mobileMenuOpen ? 'open' : ''}`} style={{ display: 'flex', gap: '15px', alignItems: 'center', flexWrap: 'wrap' }}>
             {!isAuthenticated ? (
               <>
                 <NavLink to="/login" style={navStyle('#8b5cf6')}>Login</NavLink>
@@ -88,9 +87,40 @@ function App() {
                 <NavLink to="/analytics" style={navStyle('#ec4899')}>Analytics</NavLink>
                 <NavLink to="/crm" style={navStyle('#ef4444')}>CRM System</NavLink>
                 
-                {/* User Profile Dropdown */}
-                <div style={{ position: 'relative', marginLeft: '10px' }}>
-                  <button onClick={() => setProfileOpen(!profileOpen)} style={{ background: 'linear-gradient(135deg, #f59e0b, #ec4899)', border: 'none', borderRadius: '50%', width: '38px', height: '38px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontWeight: 'bold' }}>
+                {/* 🔔 Notification Bell Feature */}
+                <div style={{ position: 'relative', marginLeft: '10px', display: 'flex', alignItems: 'center' }}>
+                  <button onClick={() => setNotificationsOpen(!notificationsOpen)} style={{ background: 'transparent', border: 'none', cursor: 'pointer', position: 'relative', color: 'var(--text-main)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '5px' }}>
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+                    <span style={{ position: 'absolute', top: '0px', right: '0px', backgroundColor: '#ef4444', color: 'white', fontSize: '10px', fontWeight: 'bold', borderRadius: '50%', width: '15px', height: '15px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>3</span>
+                  </button>
+
+                  {/* Notifications Dropdown */}
+                  {notificationsOpen && (
+                    <div style={{ position: 'absolute', right: 0, top: '45px', backgroundColor: 'var(--bg-panel)', border: '1px solid var(--border-light)', borderRadius: '8px', width: '280px', zIndex: 100, boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)' }}>
+                      <div style={{ padding: '12px', borderBottom: '1px solid var(--border-light)', fontWeight: 'bold', color: 'var(--text-main)' }}>Notifications</div>
+                      
+                      <div style={{ padding: '12px', borderBottom: '1px solid var(--border-light)', fontSize: '13px' }}>
+                        <div style={{ color: 'var(--text-main)', fontWeight: 'bold' }}>✅ New Client Added</div>
+                        <div style={{ color: 'var(--text-muted)' }}>TechCorp Inc. was added to CRM.</div>
+                        <div style={{ color: '#3b82f6', fontSize: '11px', marginTop: '4px' }}>2 mins ago</div>
+                      </div>
+                      
+                      <div style={{ padding: '12px', borderBottom: '1px solid var(--border-light)', fontSize: '13px' }}>
+                        <div style={{ color: 'var(--text-main)', fontWeight: 'bold' }}>📊 Weekly Report Ready</div>
+                        <div style={{ color: 'var(--text-muted)' }}>Your analytics report is generated.</div>
+                        <div style={{ color: '#3b82f6', fontSize: '11px', marginTop: '4px' }}>1 hour ago</div>
+                      </div>
+
+                      <div style={{ padding: '10px', textAlign: 'center' }}>
+                        <button onClick={() => setNotificationsOpen(false)} style={{ background: 'none', border: 'none', color: '#8b5cf6', fontSize: '13px', fontWeight: 'bold', cursor: 'pointer' }}>Mark all as read</button>
+                      </div>
+                    </div>
+                  )}
+                </div>
+
+                {/* Profile Dropdown */}
+                <div style={{ position: 'relative', marginLeft: '5px' }}>
+                  <button onClick={() => setProfileOpen(!profileOpen)} style={{ background: 'linear-gradient(135deg, #f59e0b, #ec4899)', border: 'none', borderRadius: '50%', width: '36px', height: '36px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontWeight: 'bold' }}>
                     HS
                   </button>
                   
