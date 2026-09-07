@@ -1,15 +1,17 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 function Login({ onLogin }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate(); // Navigation ke liye hook add kiya gaya hai
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (email && password) {
-      onLogin();
+      onLogin(); // State update hogi
+      navigate('/dashboard'); // User seedha dashboard par redirect ho jayega
     } else {
       alert("Please enter both email and password");
     }
