@@ -196,3 +196,48 @@ input[type="checkbox"] { accent-color: #8b5cf6; width: 16px; height: 16px; curso
     z-index: 9999 !important;
   }
 }
+
+/* =========================================
+   ✨ PROFESSIONAL WEB ANIMATIONS
+   ========================================= */
+
+/* 1. Page Load Animation (Fade In Up) */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Jis element ko animate karna ho us par yeh class lagayen */
+.animate-fade-in {
+  animation: fadeInUp 0.6s ease-out forwards;
+}
+
+/* 2. Card Hover Effects (Thora upar uthne wala effect) */
+.hover-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease !important;
+}
+
+.hover-card:hover {
+  transform: translateY(-7px) !important;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2) !important;
+}
+
+/* 3. Button Click & Hover Animation */
+.btn-animate {
+  transition: all 0.2s ease-in-out !important;
+}
+
+.btn-animate:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.1);
+}
+
+.btn-animate:active {
+  transform: scale(0.95); /* Click karne par thora chota hoga */
+}
