@@ -22,6 +22,21 @@ function App() {
   const [profileOpen, setProfileOpen] = useState(false);
   const [notificationsOpen, setNotificationsOpen] = useState(false);
 
+  // 🔔 DYNAMIC NOTIFICATIONS STATE
+  const [notifications, setNotifications] = useState([
+    { id: 1, title: '✅ New Client Added', desc: 'TechCorp Inc. was added to CRM.', time: '2 mins ago', read: false },
+    { id: 2, title: '📊 Weekly Report Ready', desc: 'Your analytics report is generated.', time: '1 hour ago', read: false }
+  ]);
+
+  // Unread notifications count calculate karna
+  const unreadCount = notifications.filter(n => !n.read).length;
+
+  // Mark all as read function
+  const handleMarkAllRead = () => {
+    setNotifications(notifications.map(n => ({ ...n, read: true })));
+    toast.success("All notifications marked as read!");
+  };
+
   useEffect(() => {
     document.body.style.backgroundColor = isDarkMode ? '#0f0f13' : '#f1f5f9';
     document.body.style.transition = 'background-color 0.3s ease';
@@ -91,29 +106,46 @@ function App() {
                 <div style={{ position: 'relative', marginLeft: '10px', display: 'flex', alignItems: 'center' }}>
                   <button onClick={() => setNotificationsOpen(!notificationsOpen)} style={{ background: 'transparent', border: 'none', cursor: 'pointer', position: 'relative', color: 'var(--text-main)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '5px' }}>
                     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
-                    <span style={{ position: 'absolute', top: '0px', right: '0px', backgroundColor: '#ef4444', color: 'white', fontSize: '10px', fontWeight: 'bold', borderRadius: '50%', width: '15px', height: '15px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>3</span>
+                    
+                    {/* DYNAMIC RED BADGE */}
+                    {unreadCount > 0 && (
+                      <span style={{ position: 'absolute', top: '0px', right: '0px', backgroundColor: '#ef4444', color: 'white', fontSize: '10px', fontWeight: 'bold', borderRadius: '50%', width: '15px', height: '15px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                        {unreadCount}
+                      </span>
+                    )}
                   </button>
 
-                  {/* 🔴 FIXED: Solid Background for Notifications Dropdown */}
+                  {/* NOTIFICATIONS DROPDOWN */}
                   {notificationsOpen && (
                     <div className="mobile-dropdown-fix" style={{ position: 'absolute', right: 0, top: '45px', backgroundColor: isDarkMode ? '#1e1e24' : '#ffffff', border: '1px solid var(--border-light)', borderRadius: '8px', width: '280px', zIndex: 9999, boxShadow: '0 10px 25px rgba(0, 0, 0, 0.5)' }}>
-                      <div style={{ padding: '12px', borderBottom: '1px solid var(--border-light)', fontWeight: 'bold', color: 'var(--text-main)' }}>Notifications</div>
-                      
-                      <div style={{ padding: '12px', borderBottom: '1px solid var(--border-light)', fontSize: '13px' }}>
-                        <div style={{ color: 'var(--text-main)', fontWeight: 'bold' }}>✅ New Client Added</div>
-                        <div style={{ color: 'var(--text-muted)' }}>TechCorp Inc. was added to CRM.</div>
-                        <div style={{ color: '#3b82f6', fontSize: '11px', marginTop: '4px' }}>2 mins ago</div>
+                      <div style={{ padding: '12px', borderBottom: '1px solid var(--border-light)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <span style={{ fontWeight: 'bold', color: 'var(--text-main)' }}>Notifications</span>
+                        {unreadCount > 0 && (
+                          <span style={{ fontSize: '11px', backgroundColor: '#ef4444', color: 'white', padding: '2px 8px', borderRadius: '12px', fontWeight: 'bold' }}>{unreadCount} New</span>
+                        )}
                       </div>
                       
-                      <div style={{ padding: '12px', borderBottom: '1px solid var(--border-light)', fontSize: '13px' }}>
-                        <div style={{ color: 'var(--text-main)', fontWeight: 'bold' }}>📊 Weekly Report Ready</div>
-                        <div style={{ color: 'var(--text-muted)' }}>Your analytics report is generated.</div>
-                        <div style={{ color: '#3b82f6', fontSize: '11px', marginTop: '4px' }}>1 hour ago</div>
-                      </div>
+                      {/* DYNAMIC LIST */}
+                      {unreadCount > 0 ? (
+                        notifications.filter(n => !n.read).map((notif) => (
+                          <div key={notif.id} style={{ padding: '12px', borderBottom: '1px solid var(--border-light)', fontSize: '13px' }}>
+                            <div style={{ color: 'var(--text-main)', fontWeight: 'bold' }}>{notif.title}</div>
+                            <div style={{ color: 'var(--text-muted)' }}>{notif.desc}</div>
+                            <div style={{ color: '#3b82f6', fontSize: '11px', marginTop: '4px' }}>{notif.time}</div>
+                          </div>
+                        ))
+                      ) : (
+                        <div style={{ padding: '30px 10px', textAlign: 'center', color: 'var(--text-muted)', fontSize: '14px' }}>
+                          <span style={{ fontSize: '30px', display: 'block', marginBottom: '10px' }}>🎉</span>
+                          No new notifications!
+                        </div>
+                      )}
 
-                      <div style={{ padding: '10px', textAlign: 'center' }}>
-                        <button onClick={() => setNotificationsOpen(false)} style={{ background: 'none', border: 'none', color: '#8b5cf6', fontSize: '13px', fontWeight: 'bold', cursor: 'pointer' }}>Mark all as read</button>
-                      </div>
+                      {unreadCount > 0 && (
+                        <div style={{ padding: '10px', textAlign: 'center' }}>
+                          <button onClick={handleMarkAllRead} style={{ background: 'none', border: 'none', color: '#8b5cf6', fontSize: '13px', fontWeight: 'bold', cursor: 'pointer' }}>Mark all as read</button>
+                        </div>
+                      )}
                     </div>
                   )}
                 </div>
@@ -124,7 +156,6 @@ function App() {
                     HS
                   </button>
                   
-                  {/* 🔴 FIXED: Solid Background for Profile Dropdown */}
                   {profileOpen && (
                     <div className="mobile-dropdown-fix" style={{ position: 'absolute', right: 0, top: '45px', backgroundColor: isDarkMode ? '#1e1e24' : '#ffffff', border: '1px solid var(--border-light)', borderRadius: '8px', padding: '10px', minWidth: '160px', zIndex: 9999, boxShadow: '0 10px 25px rgba(0, 0, 0, 0.5)' }}>
                       <div style={{ padding: '8px', borderBottom: '1px solid var(--border-light)', marginBottom: '5px', color: 'var(--text-main)', fontWeight: 'bold' }}>
