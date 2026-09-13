@@ -241,3 +241,10 @@ input[type="checkbox"] { accent-color: #8b5cf6; width: 16px; height: 16px; curso
 .btn-animate:active {
   transform: scale(0.95); /* Click karne par thora chota hoga */
 }
+
+/* =========================================
+   🔤 GLOBAL FONT SETTING (SEGOE UI)
+   ========================================= */
+* {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+}
