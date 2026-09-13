@@ -94,9 +94,9 @@ function App() {
                     <span style={{ position: 'absolute', top: '0px', right: '0px', backgroundColor: '#ef4444', color: 'white', fontSize: '10px', fontWeight: 'bold', borderRadius: '50%', width: '15px', height: '15px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>3</span>
                   </button>
 
-                  {/* Notifications Dropdown (Added class here) */}
+                  {/* 🔴 FIXED: Solid Background for Notifications Dropdown */}
                   {notificationsOpen && (
-                    <div className="mobile-dropdown-fix" style={{ position: 'absolute', right: 0, top: '45px', backgroundColor: 'var(--bg-panel)', border: '1px solid var(--border-light)', borderRadius: '8px', width: '280px', zIndex: 100, boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)' }}>
+                    <div className="mobile-dropdown-fix" style={{ position: 'absolute', right: 0, top: '45px', backgroundColor: isDarkMode ? '#1e1e24' : '#ffffff', border: '1px solid var(--border-light)', borderRadius: '8px', width: '280px', zIndex: 9999, boxShadow: '0 10px 25px rgba(0, 0, 0, 0.5)' }}>
                       <div style={{ padding: '12px', borderBottom: '1px solid var(--border-light)', fontWeight: 'bold', color: 'var(--text-main)' }}>Notifications</div>
                       
                       <div style={{ padding: '12px', borderBottom: '1px solid var(--border-light)', fontSize: '13px' }}>
@@ -124,9 +124,9 @@ function App() {
                     HS
                   </button>
                   
-                  {/* Profile Dropdown Menu (Added class here) */}
+                  {/* 🔴 FIXED: Solid Background for Profile Dropdown */}
                   {profileOpen && (
-                    <div className="mobile-dropdown-fix" style={{ position: 'absolute', right: 0, top: '45px', backgroundColor: 'var(--bg-panel)', border: '1px solid var(--border-light)', borderRadius: '8px', padding: '10px', minWidth: '160px', zIndex: 100, boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)' }}>
+                    <div className="mobile-dropdown-fix" style={{ position: 'absolute', right: 0, top: '45px', backgroundColor: isDarkMode ? '#1e1e24' : '#ffffff', border: '1px solid var(--border-light)', borderRadius: '8px', padding: '10px', minWidth: '160px', zIndex: 9999, boxShadow: '0 10px 25px rgba(0, 0, 0, 0.5)' }}>
                       <div style={{ padding: '8px', borderBottom: '1px solid var(--border-light)', marginBottom: '5px', color: 'var(--text-main)', fontWeight: 'bold' }}>
                         Hassan Sheharyar
                       </div>
