@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom';
 
 function Dashboard({ onLogout }) {
-  // Fake summary data for professional look
   const stats = [
     { title: "Total Revenue", value: "$45,231", trend: "+20.1%", color: "#10b981", icon: "💰" },
     { title: "Active Projects", value: "12", trend: "+3", color: "#3b82f6", icon: "🚀" },
@@ -10,7 +9,7 @@ function Dashboard({ onLogout }) {
   ];
 
   return (
-    <div style={{ padding: '10px 0' }}>
+    <div className="animate-fade-in" style={{ padding: '10px 0' }}>
       
       {/* Welcome Header */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '30px', flexWrap: 'wrap', gap: '15px' }}>
@@ -23,7 +22,7 @@ function Dashboard({ onLogout }) {
       {/* 4 Professional Summary Cards */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '20px', marginBottom: '40px' }}>
         {stats.map((stat, index) => (
-          <div key={index} style={{ backgroundColor: 'var(--bg-panel)', padding: '24px', borderRadius: '12px', border: '1px solid var(--border-light)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.05)' }}>
+          <div key={index} className="hover-card" style={{ backgroundColor: 'var(--bg-panel)', padding: '24px', borderRadius: '12px', border: '1px solid var(--border-light)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.05)' }}>
             <div>
               <p style={{ margin: 0, color: 'var(--text-muted)', fontSize: '14px', fontWeight: 'bold' }}>{stat.title}</p>
               <h2 style={{ margin: '10px 0 5px 0', color: 'var(--text-main)', fontSize: '32px' }}>{stat.value}</h2>
@@ -38,17 +37,17 @@ function Dashboard({ onLogout }) {
       <h2 style={{ color: 'var(--text-main)', marginBottom: '20px', fontFamily: "'Averia Gruesa Libre', cursive", fontSize: '22px' }}>Quick Access</h2>
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '15px' }}>
         
-        <Link to="/crm" style={{ padding: '20px', backgroundColor: '#ef444415', border: '1px solid #ef4444', borderRadius: '12px', textDecoration: 'none', color: 'var(--text-main)', display: 'flex', flexDirection: 'column', alignItems: 'center', transition: 'transform 0.2s' }}>
+        <Link to="/crm" className="hover-card" style={{ padding: '20px', backgroundColor: '#ef444415', border: '1px solid #ef4444', borderRadius: '12px', textDecoration: 'none', color: 'var(--text-main)', display: 'flex', flexDirection: 'column', alignItems: 'center', transition: 'transform 0.2s' }}>
           <span style={{ fontSize: '30px', marginBottom: '10px' }}>🤝</span>
           <span style={{ fontWeight: 'bold' }}>Manage CRM</span>
         </Link>
         
-        <Link to="/project-management" style={{ padding: '20px', backgroundColor: '#f59e0b15', border: '1px solid #f59e0b', borderRadius: '12px', textDecoration: 'none', color: 'var(--text-main)', display: 'flex', flexDirection: 'column', alignItems: 'center', transition: 'transform 0.2s' }}>
+        <Link to="/project-management" className="hover-card" style={{ padding: '20px', backgroundColor: '#f59e0b15', border: '1px solid #f59e0b', borderRadius: '12px', textDecoration: 'none', color: 'var(--text-main)', display: 'flex', flexDirection: 'column', alignItems: 'center', transition: 'transform 0.2s' }}>
           <span style={{ fontSize: '30px', marginBottom: '10px' }}>📋</span>
           <span style={{ fontWeight: 'bold' }}>Kanban Board</span>
         </Link>
         
-        <Link to="/analytics" style={{ padding: '20px', backgroundColor: '#ec489915', border: '1px solid #ec4899', borderRadius: '12px', textDecoration: 'none', color: 'var(--text-main)', display: 'flex', flexDirection: 'column', alignItems: 'center', transition: 'transform 0.2s' }}>
+        <Link to="/analytics" className="hover-card" style={{ padding: '20px', backgroundColor: '#ec489915', border: '1px solid #ec4899', borderRadius: '12px', textDecoration: 'none', color: 'var(--text-main)', display: 'flex', flexDirection: 'column', alignItems: 'center', transition: 'transform 0.2s' }}>
           <span style={{ fontSize: '30px', marginBottom: '10px' }}>📈</span>
           <span style={{ fontWeight: 'bold' }}>View Analytics</span>
         </Link>

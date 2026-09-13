@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { toast } from 'react-hot-toast'; // Toast import kiya gaya hai
+import { toast } from 'react-hot-toast';
 
 function Login({ onLogin }) {
   const [email, setEmail] = useState('');
@@ -11,17 +11,17 @@ function Login({ onLogin }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (email && password) {
-      toast.success('Login Successful! Welcome back.'); // Beautiful popup
+      toast.success('Login Successful! Welcome back.');
       onLogin();
       navigate('/dashboard');
     } else {
-      toast.error("Please enter both email and password!"); // Error popup
+      toast.error("Please enter both email and password!");
     }
   };
 
   return (
-    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '80vh' }}>
-      <div style={{ backgroundColor: 'var(--bg-panel)', padding: '40px', borderRadius: '12px', border: '1px solid var(--border-light)', width: '100%', maxWidth: '400px' }}>
+    <div className="animate-fade-in" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '80vh' }}>
+      <div className="hover-card" style={{ backgroundColor: 'var(--bg-panel)', padding: '40px', borderRadius: '12px', border: '1px solid var(--border-light)', width: '100%', maxWidth: '400px' }}>
         <h2 style={{ textAlign: 'center', color: 'var(--text-main)', marginBottom: '30px', fontFamily: "'Averia Gruesa Libre', cursive" }}>Account Login</h2>
         
         <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
@@ -66,7 +66,7 @@ function Login({ onLogin }) {
             <label htmlFor="remember" style={{ color: 'var(--text-muted)', fontSize: '14px', cursor: 'pointer' }}>Remember Me</label>
           </div>
 
-          <button type="submit" style={{ width: '100%', padding: '12px', borderRadius: '8px', border: 'none', backgroundColor: '#8b5cf6', color: 'white', fontWeight: 'bold', fontSize: '16px', cursor: 'pointer', marginTop: '10px' }}>
+          <button className="btn-animate" type="submit" style={{ width: '100%', padding: '12px', borderRadius: '8px', border: 'none', backgroundColor: '#8b5cf6', color: 'white', fontWeight: 'bold', fontSize: '16px', cursor: 'pointer', marginTop: '10px' }}>
             Sign In
           </button>
         </form>
