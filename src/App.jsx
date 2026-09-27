@@ -28,13 +28,12 @@ function App() {
     { id: 2, title: '📊 Weekly Report Ready', desc: 'Your analytics report is generated.', time: '1 hour ago' }
   ]);
 
-  // Direct count
   const unreadCount = notifications.length;
 
   const handleMarkAllRead = (e) => {
     e.preventDefault();
-    setNotifications([]); // List ko khali kar dega
-    setNotificationsOpen(false); // Dropdown band kar dega
+    setNotifications([]); 
+    setNotificationsOpen(false); 
     toast.success("All notifications marked as read!");
   };
 
@@ -70,7 +69,7 @@ function App() {
       
       <div className={`app-wrapper ${isDarkMode ? 'dark-mode' : 'light-mode'}`} style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', padding: '20px', boxSizing: 'border-box', overflowX: 'hidden' }}>
         
-        {/* 🔥 FIX 1: NAVBAR KO ABSOLUTE TOP LAYER MEIN LOCK KIYA (zIndex: 999999) */}
+        {/* Navbar Layer Lock (zIndex: 999999) */}
         <nav style={{ position: 'relative', zIndex: 999999, display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '15px', marginBottom: '30px', padding: '15px 25px', backgroundColor: 'var(--bg-panel)', borderRadius: '12px', border: '1px solid var(--border-light)' }}>
           
           <Link to="/dashboard" style={{ textDecoration: 'none', color: 'var(--text-main)', display: 'flex', alignItems: 'center', gap: '10px' }}>
@@ -103,7 +102,7 @@ function App() {
                 <NavLink to="/analytics" style={navStyle('#ec4899')}>Analytics</NavLink>
                 <NavLink to="/crm" style={navStyle('#ef4444')}>CRM System</NavLink>
                 
-                {/* 🔔 Notification Bell Feature */}
+                {/* Notifications Bell */}
                 <div style={{ position: 'relative', marginLeft: '10px', display: 'flex', alignItems: 'center' }}>
                   <button onClick={() => {setNotificationsOpen(!notificationsOpen); setProfileOpen(false);}} style={{ background: 'transparent', border: 'none', cursor: 'pointer', position: 'relative', color: 'var(--text-main)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '5px' }}>
                     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
@@ -115,7 +114,7 @@ function App() {
                     )}
                   </button>
 
-                  {/* 🔥 NOTIFICATIONS DROPDOWN FIX */}
+                  {/* Notifications Dropdown */}
                   {notificationsOpen && (
                     <div style={{ position: 'absolute', right: '-10px', top: '50px', backgroundColor: isDarkMode ? '#1a1a24' : '#ffffff', border: '1px solid var(--border-light)', borderRadius: '12px', width: '300px', zIndex: 999999, boxShadow: '0 15px 40px rgba(0,0,0,0.6)', overflow: 'hidden' }}>
                       <div style={{ padding: '15px', borderBottom: '1px solid var(--border-light)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -168,13 +167,14 @@ function App() {
               </>
             )}
             
+            {/* Theme Toggle */}
             <button onClick={() => setIsDarkMode(!isDarkMode)} style={{ padding: '8px 16px', borderRadius: '8px', cursor: 'pointer', fontWeight: 'bold', border: isDarkMode ? '1px solid rgba(255,255,255,0.2)' : '1px solid rgba(0,0,0,0.1)', backgroundColor: isDarkMode ? 'rgba(20,20,25,0.6)' : '#ffffff', color: isDarkMode ? '#ffffff' : '#1e293b' }}>
               {isDarkMode ? '☀️ Light' : '🌙 Dark'}
             </button>
           </div>
         </nav>
 
-        {/* 🔥 FIX 2: ROUTER (MAIN CONTENT) KO LOWER LAYER MEIN QAID KAR DIYA (zIndex: 1) */}
+        {/* Main Content (Lower Layer Lock: zIndex: 1) */}
         <div style={{ flex: 1, position: 'relative', zIndex: 1 }}>
           <Routes>
             <Route path="/login" element={<Login onLogin={() => setIsAuthenticated(true)} />} />
@@ -182,18 +182,21 @@ function App() {
             <Route path="/forgot-password" element={<ForgotPassword />} />
             <Route path="/otp-verification" element={<OTPVerification />} />
             <Route path="/reset-password" element={<ResetPassword />} />
+            
+            {/* ALL PROTECTED ROUTES */}
             <Route path="/dashboard" element={<ProtectedRoute><Dashboard onLogout={handleLogout} /></ProtectedRoute>} />
-            <Route path="/hr-dashboard" element={<EmployeeDashboard />} />
-            <Route path="/ecommerce-dashboard" element={<EcommerceDashboard />} />
-            <Route path="/project-management" element={<ProjectManagement />} />
-            <Route path="/analytics" element={<AnalyticsDashboard />} />
-            <Route path="/crm" element={<CRMDashboard />} />
+            <Route path="/hr-dashboard" element={<ProtectedRoute><EmployeeDashboard /></ProtectedRoute>} />
+            <Route path="/ecommerce-dashboard" element={<ProtectedRoute><EcommerceDashboard /></ProtectedRoute>} />
+            <Route path="/project-management" element={<ProtectedRoute><ProjectManagement /></ProtectedRoute>} />
+            <Route path="/analytics" element={<ProtectedRoute><AnalyticsDashboard /></ProtectedRoute>} />
+            <Route path="/crm" element={<ProtectedRoute><CRMDashboard /></ProtectedRoute>} />
+            
             <Route path="/" element={<Navigate to="/login" replace />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </div>
 
-        {/* FOOTER */}
+        {/* Footer */}
         <footer style={{ marginTop: '40px', padding: '20px', borderTop: '1px solid var(--border-light)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '15px', color: 'var(--text-muted)', fontSize: '14px' }}>
           <div>&copy; {new Date().getFullYear()} BizSync Pro. All rights reserved.</div>
           <div style={{ display: 'flex', gap: '20px', alignItems: 'center', flexWrap: 'wrap' }}>
